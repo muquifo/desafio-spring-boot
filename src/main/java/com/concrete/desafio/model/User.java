@@ -1,20 +1,29 @@
 package com.concrete.desafio.model;
 
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.crypto.Data;
 
-import org.springframework.data.annotation.Id;
 
 @Entity
 @Table(name = "user")
-public class Usuario {
+public class User implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,7 +34,7 @@ public class Usuario {
 	private String token;
 
 	@Column(name = "nm_user")
-	private String username;
+	private String name;
 
 	@Column(name = "cd_password")
 	private String password;
@@ -34,16 +43,16 @@ public class Usuario {
 	private String email;
 
 	@Column(name = "dt_created")
-	private Data created;
+	private LocalDateTime created;
 
 	@Column(name = "dt_modified")
-	private Data modified;
+	private LocalDateTime modified;
 
 	@Column(name = "dt_last_login")
-	private Data last_login;
+	private LocalDateTime last_login;
 
-	private Collection<Telefone> telefone;
-
+	@OneToMany(mappedBy= "user", fetch= FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private Collection<Phone> phones;
 
 
 
@@ -64,14 +73,6 @@ public class Usuario {
 		this.token = token;
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -88,36 +89,44 @@ public class Usuario {
 		this.email = email;
 	}
 
-	public Data getCreated() {
+	public LocalDateTime getCreated() {
 		return created;
 	}
 
-	public void setCreated(Data created) {
+	public void setCreated(LocalDateTime created) {
 		this.created = created;
 	}
 
-	public Data getModified() {
+	public LocalDateTime getModified() {
 		return modified;
 	}
 
-	public void setModified(Data modified) {
+	public void setModified(LocalDateTime modified) {
 		this.modified = modified;
 	}
 
-	public Data getLast_login() {
+	public LocalDateTime getLast_login() {
 		return last_login;
 	}
 
-	public void setLast_login(Data last_login) {
+	public void setLast_login(LocalDateTime last_login) {
 		this.last_login = last_login;
 	}
 
-	public Collection<Telefone> getTelefone() {
-		return telefone;
+	public String getName() {
+		return name;
 	}
 
-	public void setTelefone(Collection<Telefone> telefone) {
-		this.telefone = telefone;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Collection<Phone> getPhones() {
+		return phones;
+	}
+
+	public void setPhones(Collection<Phone> phones) {
+		this.phones = phones;
 	}
 
 }
