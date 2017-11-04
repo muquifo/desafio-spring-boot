@@ -10,31 +10,32 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 @Entity
-@Table(name = "telefone")
 public class Phone implements Serializable{
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "cd_id")
+	@Column(name="cd_id")
 	private Long id;
-	
-	@Column(name = "nm_number")
+
+	@Column(name="cd_number")
 	private Long number;
-	
-	@Column(name = "nm_ddd")
+
+	@Column(name="cd_ddd")
 	private String ddd;
 
 	@ManyToOne
-	@JoinColumn(name="user_fk")
+	@JoinColumn(name="user_jk", referencedColumnName="cd_id")
+	@JsonBackReference
 	private User user;
 
 

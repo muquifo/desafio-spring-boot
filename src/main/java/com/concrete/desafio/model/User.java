@@ -13,47 +13,47 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 @Entity
-@Table(name = "user")
 public class User implements Serializable{
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "cd_id")
+	@Column(name="cd_id")
 	private Long id;
 
-	@Column(name = "cd_token")
+	@Column(name="cd_token")
 	private String token;
 
-	@Column(name = "nm_user")
+	@Column(name="nm_user")
 	private String name;
 
-	@Column(name = "cd_password")
+	@Column(name="cd_password")
 	private String password;
 
-	@Column(name = "nm_email")
+	@Column(name="nm_email")
 	private String email;
 
-	@Column(name = "dt_created")
+	@Column(name="dt_created")
 	private LocalDateTime created;
 
-	@Column(name = "dt_modified")
+	@Column(name="dt_modified")
 	private LocalDateTime modified;
 
-	@Column(name = "dt_last_login")
+	@Column(name="dt_last_login")
 	private LocalDateTime last_login;
 
 	@OneToMany(mappedBy= "user", fetch= FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JsonManagedReference
 	private Collection<Phone> phones;
-
 
 
 

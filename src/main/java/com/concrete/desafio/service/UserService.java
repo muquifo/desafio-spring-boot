@@ -1,12 +1,13 @@
 package com.concrete.desafio.service;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.concrete.desafio.exception.SessaoInvalidException;
 import com.concrete.desafio.exception.TokenInvalidException;
 import com.concrete.desafio.exception.UserAlreadyExistsException;
 import com.concrete.desafio.model.User;
@@ -17,7 +18,6 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-
 
 	public void save(User user) throws UserAlreadyExistsException{
 
@@ -34,24 +34,33 @@ public class UserService {
 		userRepository.save(user);
 	}
 
-	public List<User> findAll() {
-		return userRepository.findAll();
-	}
-
-	public User findByUsername(String name) {
-		return userRepository.findByName(name);
-	}
-
-	public User findById(Long id, String token) throws TokenInvalidException{
+	public User findById(Long id, String token) throws TokenInvalidException, SessaoInvalidException{
 
 		User userToken = userRepository.findByToken(token);
+		User userId = null;
 
 		if(userToken == null) {
 			throw new TokenInvalidException("Não autorizado");
+		}else{
+			userId = userRepository.findById(id);
+			if(!userId.getToken().equals(token)) {
+				throw new TokenInvalidException("Não autorizado");
+			}else if(!tempoSessaoPermitido(userId.getLast_login())){
+				throw new SessaoInvalidException("Sessão inválida");
+			}
 		}
-
-		return userRepository.findById(id);
+		return userId;
 	}
 
+	private boolean tempoSessaoPermitido(LocalDateTime last_login) {
+		boolean tempoPermitido = true;
+		LocalDateTime dataTimeAtual = LocalDateTime.now();
+		Duration duracao = Duration.between(last_login, dataTimeAtual);
+		long tempoMinuto = (duracao.getSeconds() / 60);
+		if(tempoMinuto > 60) {
+			tempoPermitido = false;
+		}
+		return tempoPermitido;
+	}
 
 }

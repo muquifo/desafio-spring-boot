@@ -1,0 +1,39 @@
+package com.concrete.desafio.service;
+
+import java.time.LocalDateTime;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.concrete.desafio.exception.UserInvalidException;
+import com.concrete.desafio.model.User;
+import com.concrete.desafio.repository.UserRepository;
+
+@Service
+public class LoginService {
+
+	@Autowired
+	private UserRepository userRepository;
+
+	public User findByEmailPassword(String email, String password) throws UserInvalidException{
+
+		User user = userRepository.findByEmail(email);
+
+		if(user == null) {
+			throw new UserInvalidException("Usuário e/ou senha inválidos");
+		}else if(!user.getPassword().equals(password)){
+			throw new UserInvalidException("Usuário e/ou senha inválidos");
+		}
+
+		User userAtualizado = updateLastLogin(user);
+
+		return userAtualizado;
+	}
+
+	private User updateLastLogin(User user) {
+		user.setLast_login(LocalDateTime.now());
+		userRepository.flush();
+		User userAtualizado = userRepository.findById(user.getId());
+		return userAtualizado;
+	}
+}
