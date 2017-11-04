@@ -20,9 +20,9 @@ public class LoginService {
 		User user = userRepository.findByEmail(email);
 
 		if(user == null) {
-			throw new UserInvalidException("Usuário e/ou senha inválidos");
+			throw new UserInvalidException("Usuario e/ou senha invalidos");
 		}else if(!user.getPassword().equals(password)){
-			throw new UserInvalidException("Usuário e/ou senha inválidos");
+			throw new UserInvalidException("Usuario e/ou senha invalidos");
 		}
 
 		User userAtualizado = updateLastLogin(user);

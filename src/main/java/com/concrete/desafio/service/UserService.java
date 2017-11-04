@@ -22,7 +22,7 @@ public class UserService {
 	public void save(User user) throws UserAlreadyExistsException{
 
 		if(userRepository.findByEmail(user.getEmail()) != null) {
-			throw new UserAlreadyExistsException("E-mail já existente");
+			throw new UserAlreadyExistsException("E-mail ja existente");
 		}
 
 		LocalDateTime timeCreated = LocalDateTime.now();
@@ -40,13 +40,13 @@ public class UserService {
 		User userId = null;
 
 		if(userToken == null) {
-			throw new TokenInvalidException("Não autorizado");
+			throw new TokenInvalidException("Nao autorizado");
 		}else{
 			userId = userRepository.findById(id);
 			if(!userId.getToken().equals(token)) {
-				throw new TokenInvalidException("Não autorizado");
+				throw new TokenInvalidException("Nao autorizado");
 			}else if(!tempoSessaoPermitido(userId.getLast_login())){
-				throw new SessaoInvalidException("Sessão inválida");
+				throw new SessaoInvalidException("Sessao invalida");
 			}
 		}
 		return userId;

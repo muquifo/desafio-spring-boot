@@ -42,7 +42,7 @@ public class UserController {
 	@ExceptionHandler(TokenInvalidException.class)
 	public ResponseEntity<ErrorKey> handlerTokenInvalidException() {
 		ErrorKey errorKey = new ErrorKey();
-		errorKey.setMensagem("Não autorizado");
+		errorKey.setMensagem("Nao autorizado");
 		return new ResponseEntity<ErrorKey>(errorKey, HttpStatus.UNAUTHORIZED);
 	}
 
@@ -50,7 +50,7 @@ public class UserController {
 	public String handleUserAlreadyExistsException(){
 		Gson gson = new Gson();
 		ErrorKey errorKey = new ErrorKey();
-		errorKey.setMensagem("E-mail já existente");
+		errorKey.setMensagem("E-mail ja existente");
 		String mensagemErroJson = gson.toJson(errorKey);
 		return mensagemErroJson;
 	}
@@ -58,7 +58,7 @@ public class UserController {
 	@ExceptionHandler(SessaoInvalidException.class)
 	public ResponseEntity<ErrorKey> handlerSessaoInvalidException() {
 		ErrorKey errorKey = new ErrorKey();
-		errorKey.setMensagem("Sessão inválida");
+		errorKey.setMensagem("Sessao invalida");
 		return new ResponseEntity<ErrorKey>(errorKey, HttpStatus.UNAUTHORIZED);
 	}
 
