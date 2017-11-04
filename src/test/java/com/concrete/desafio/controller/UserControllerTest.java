@@ -22,7 +22,6 @@ import com.google.gson.Gson;
 @RunWith(MockitoJUnitRunner.class)
 public class UserControllerTest {
 
-
 	private static final String TOKEN_VALIDO = "1f896037-95f4-4028-8c81-6194f5fa9c8c";
 	private static final Long ID_VALIDO = 123456L;
 	User USER_VALIDO = null;
@@ -72,4 +71,5 @@ public class UserControllerTest {
 		ResponseEntity<ErrorKey> errorResponse  = userController.handlerSessaoInvalidException();
 		assertNotNull(errorResponse);
 	}
+
 }

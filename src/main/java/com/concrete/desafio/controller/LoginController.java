@@ -29,7 +29,7 @@ public class LoginController {
 	}
 
 	@ExceptionHandler(UserInvalidException.class)
-	public ResponseEntity<ErrorKey> handlerTokenException() {
+	public ResponseEntity<ErrorKey> handlerUserInvalidException() {
 		ErrorKey errorKey = new ErrorKey();
 		errorKey.setMensagem("Usuário e/ou senha inválidos");
 		return new ResponseEntity<ErrorKey>(errorKey, HttpStatus.UNAUTHORIZED);

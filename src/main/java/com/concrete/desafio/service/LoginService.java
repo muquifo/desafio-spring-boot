@@ -36,4 +36,5 @@ public class LoginService {
 		User userAtualizado = userRepository.findById(user.getId());
 		return userAtualizado;
 	}
+
 }
