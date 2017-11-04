@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +42,13 @@ public class UserController {
 
 	@ExceptionHandler(TokenInvalidException.class)
 	public ResponseEntity<ErrorKey> handlerTokenInvalidException() {
+		ErrorKey errorKey = new ErrorKey();
+		errorKey.setMensagem("Nao autorizado");
+		return new ResponseEntity<ErrorKey>(errorKey, HttpStatus.UNAUTHORIZED);
+	}
+
+	@ExceptionHandler(ServletRequestBindingException.class)
+	public ResponseEntity<ErrorKey> handlerServletRequestBindingException() {
 		ErrorKey errorKey = new ErrorKey();
 		errorKey.setMensagem("Nao autorizado");
 		return new ResponseEntity<ErrorKey>(errorKey, HttpStatus.UNAUTHORIZED);

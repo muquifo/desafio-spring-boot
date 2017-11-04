@@ -58,6 +58,12 @@ public class UserControllerTest {
 	}
 
 	@Test
+	public void deveTratarErroRequestNull() {
+		ResponseEntity<ErrorKey> errorResponse  = userController.handlerServletRequestBindingException();
+		assertNotNull(errorResponse);
+	}
+
+	@Test
 	public void deveTratarErroUsuarioEmailExistente() throws JSONException {
 		String erroMensagem = userController.handleUserAlreadyExistsException();
 		Gson gson = new Gson();
