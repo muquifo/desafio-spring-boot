@@ -10,6 +10,7 @@ https://shrouded-fjord-36232.herokuapp.com/
 # EndPoints
 
 Cadastro Usuario
+POST  JSON
 
 https://shrouded-fjord-36232.herokuapp.com/usuario
 
@@ -31,6 +32,7 @@ https://shrouded-fjord-36232.herokuapp.com/usuario
 # 
 
 Get Usuario
+GET 
 
 https://shrouded-fjord-36232.herokuapp.com/usuario/{id}
 
@@ -40,6 +42,7 @@ token : "44444-33333-22222-11111"
 # 
 
 Login
+POST  JSON
 
 https://shrouded-fjord-36232.herokuapp.com/login
 
